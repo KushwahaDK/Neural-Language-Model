@@ -120,10 +120,12 @@ def train_model(mapping, X_train, X_test, y_train, y_test):
     Returns:
         keras model : Trained keras model
     """
+    vocab = len(mapping)
+
     model = Sequential()
-    model.add(Embedding(len(mapping), 50, input_length=30, trainable=True))
+    model.add(Embedding(vocab, 50, input_length=30, trainable=True))
     model.add(GRU(50, recurrent_dropout=0.1, dropout=0.1))
-    model.add(Dense(len(mapping), activation='softmax'))
+    model.add(Dense(vocab, activation='softmax'))
     model.summary()
 
     model.compile(optimizer='adam',
@@ -177,4 +179,3 @@ if __name__ == "__main__":
     print(" !!.... Saving model and Mapping ....!! ")
     model_path = 'models/char_based_neural_lang_model.h5'
     save_model(mapping, model, model_path)
-    
